@@ -37,7 +37,7 @@ class AddMember extends Component {
         headers: { Authorization: `Bearer ${cookies.get("jwtToken")}` },
       })
       .then((response) => {
-        toast.success(response.data.id, {
+        toast.success(`Member added with Client Id as : ${response.data.id}`, {
           position: "top-center",
         });
       })
@@ -89,7 +89,7 @@ class AddMember extends Component {
                   <div className="col-6">
                     <label>Contact</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="contact"
                       name="contact"
@@ -101,7 +101,7 @@ class AddMember extends Component {
                   <div className="col-6">
                     <label>Emergency Contact</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="emergencyContact"
                       name="emergencyContact"
@@ -196,7 +196,7 @@ class AddMember extends Component {
                   <div className="col-6">
                     <label>Subscription Fee </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="fees"
                       name="fees"

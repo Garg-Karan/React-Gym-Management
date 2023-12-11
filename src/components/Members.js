@@ -6,7 +6,8 @@ import { Cookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
-import { Button } from "bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope,faFileExcel } from '@fortawesome/free-solid-svg-icons'
 
 // set up cookies
 const cookies = new Cookies();
@@ -74,6 +75,39 @@ class Members extends Component {
       memberUpdateFlag: false,
       memberId: "",
     };
+  }
+
+  handleDownloadExcel = () =>{
+    myAxios
+    .get("/member/downloadExcelFile", {
+      responseType: 'arraybuffer',
+      headers: { 
+        Accept: 'application/octet-stream',
+        Authorization: `Bearer ${cookies.get("jwtToken")}` 
+    },
+    })
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'clientsData.xlsx')
+      document.body.appendChild(link);
+      link.click();
+      toast.success(
+        `Downloading Started. Please wait !!`,
+        {
+          position: "top-center",
+        }
+      );
+    })
+    .catch((error) => {
+      toast.error(
+        `Downloading Failed. Please check log !! ${error.response.status}`,
+        {
+          position: "top-center",
+        }
+      );
+    });
   }
 
   handleFilter = (event) => {
@@ -150,8 +184,11 @@ class Members extends Component {
   render() {
     return (
       <div className="container mt-5">
-        <div className="text-end">
-          <input type="text" onChange={this.handleFilter} />
+        <div className="d-flex justify-content-end gap-2">
+          <div className="ml-5" onClick={this.handleDownloadExcel}>
+           <FontAwesomeIcon icon={faFileExcel} className="fa-2xl"/>            
+          </div>
+          <input type="text" className="form-control-sm" onChange={this.handleFilter} />
         </div>
         <DataTable
           title="All Members"
@@ -160,7 +197,7 @@ class Members extends Component {
           data={this.state.records}
           pagination
           highlightOnHover
-          fixedHeaderScrollHeight="300px"
+          fixedHeaderScrollHeight="500px"
         />
         <div className="d-flex justify-content-center align-items-center mt-2">
           <button className="btn btn-sm btn-primary" onClick={this.refreshData}>

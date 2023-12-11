@@ -76,7 +76,7 @@ class Updatemember extends Component {
                   <div className="col-11">
                     <label>MemberShip ID </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control mr-2"
                       id="id"
                       name="address"
@@ -118,7 +118,7 @@ class Updatemember extends Component {
                   <div className="col-6">
                     <label>Contact</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="contact"
                       name="contact"
@@ -130,7 +130,7 @@ class Updatemember extends Component {
                   <div className="col-6">
                     <label>Emergency Contact</label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="emergencyContact"
                       name="emergencyContact"
@@ -225,7 +225,7 @@ class Updatemember extends Component {
                   <div className="col-6">
                     <label>Subscription Fee </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="fees"
                       name="fees"
